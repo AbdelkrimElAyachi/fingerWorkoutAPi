@@ -27,10 +27,10 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
     try {
         yield user.save();
-        res.send({ user: user._id });
+        res.send({ success: true, user: user._id });
     }
     catch (err) {
-        res.status(400).send(err);
+        res.status(400).json({ success: false, message: err });
     }
 });
 exports.registerUser = registerUser;
@@ -38,6 +38,6 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = jsonwebtoken_1.default.sign({ id: req.userId }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME
     });
-    res.header('Authorization', `Bearer ${token}`).send(token);
+    res.header('Authorization', `Bearer ${token}`).json({ success: true, token: token });
 });
 exports.loginUser = loginUser;

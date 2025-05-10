@@ -10,8 +10,8 @@ type RequestBody = {
 
 // zod Validations
 const loginSchema = z.object({
-    email: z.string().min(6).email(),
-    password: z.string().min(6)
+    email: z.string().email(),
+    password: z.string()
 }).strict();
 
 export const loginValidation = async (req: Request, res: Response, next: NextFunction) => {
@@ -31,10 +31,10 @@ export const loginValidation = async (req: Request, res: Response, next: NextFun
                 next();
             }
             else
-                res.status(400).send('Invalid Email or Password!!!')
+                res.status(400).json({success:false, message:'Invalid Email or Password!!!'});
         }
         else
-            res.status(400).send('Invalid Email or Password!!!')
+            res.status(400).json({success:false, message:'Invalid Email or Password!!!'});
     }
 
 }

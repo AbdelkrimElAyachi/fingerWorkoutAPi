@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sampleController = void 0;
-const sampleController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({ data: 'This is only accessible using JWT', user: req.user });
+exports.profileController = void 0;
+const User_1 = __importDefault(require("../models/User"));
+const profileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const usr = yield User_1.default.findById(req.user.id);
+    res.status(200).json({ success: true, data: usr, user: req.user, userId: req.userId });
 });
-exports.sampleController = sampleController;
+exports.profileController = profileController;

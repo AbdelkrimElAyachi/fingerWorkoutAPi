@@ -23,7 +23,7 @@ export const registerValidation = async (req: Request, res: Response, next: Next
         // checking to see if the user is already registered
         const emailExist = await User.findOne({ email: emailFromBody })
         if (emailExist)
-            res.status(400).send('Email already exists!!!')
+            res.status(400).json({success:false, message:'Email already exists!!!'})
         else
             next();
     }
