@@ -38,6 +38,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = jsonwebtoken_1.default.sign({ id: req.userId }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME
     });
-    res.header('Authorization', `Bearer ${token}`).json({ success: true, token: token });
+    const user = yield User_1.default.findById(req.userId);
+    res.header('Authorization', `Bearer ${token}`).json({ success: true, token: token, user });
 });
 exports.loginUser = loginUser;

@@ -16,6 +16,6 @@ exports.profileController = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const profileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usr = yield User_1.default.findById(req.user.id);
-    res.status(200).json({ success: true, data: usr, user: req.user, userId: req.userId });
+    res.status(200).json({ success: true, user: usr, userId: req.userId });
 });
 exports.profileController = profileController;

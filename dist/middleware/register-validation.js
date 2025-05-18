@@ -16,7 +16,7 @@ exports.registerValidation = void 0;
 const zod_1 = require("zod");
 const User_1 = __importDefault(require("../models/User"));
 const registerSchema = zod_1.z.object({
-    name: zod_1.z.string().min(3),
+    name: zod_1.z.string().min(5),
     email: zod_1.z.string().min(6).email(),
     password: zod_1.z.string().min(6)
 }).strict();

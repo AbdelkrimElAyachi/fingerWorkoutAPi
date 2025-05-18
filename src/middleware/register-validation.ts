@@ -5,7 +5,7 @@ import User from "../models/User";
 
 // zod Validations
 const registerSchema = z.object({
-    name: z.string().min(3),
+    name: z.string().min(5),
     email: z.string().min(6).email(),
     password: z.string().min(6)
 }).strict();
