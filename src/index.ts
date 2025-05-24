@@ -18,7 +18,7 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 
 const corsOptions:CorsOptions = {
-    origin: ['http://localhost:5173'], // frontend urls (developpement, production)
+    origin: ['http://localhost:5173','http://localhost:4000'], // frontend urls (developpement, production)
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }

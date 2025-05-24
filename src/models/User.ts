@@ -3,6 +3,7 @@ import { Schema, model, Document, Types } from "mongoose"
 interface IUser extends Document {
     name: string;
     email: string;
+    picture: string;
     password: string;
     date: Date;
 }
@@ -17,6 +18,11 @@ const UserSchema: Schema = new Schema({
     email: {
         type: String,
         required: true,
+        max: 255
+    },
+    picture: {
+        type: String,
+        required: false,
         max: 255
     },
     EmailVerified: {
