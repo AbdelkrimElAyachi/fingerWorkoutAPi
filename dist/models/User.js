@@ -13,6 +13,11 @@ const UserSchema = new mongoose_1.Schema({
         required: true,
         max: 255
     },
+    picture: {
+        type: String,
+        required: false,
+        max: 255
+    },
     EmailVerified: {
         type: Boolean,
         required: false,
