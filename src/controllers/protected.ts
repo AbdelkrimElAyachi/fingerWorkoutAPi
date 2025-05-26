@@ -9,7 +9,7 @@ export const profileController = async (req: any, res: Response) => {
 }
 
 export const updateProfile = async (req:any, res:Response) => {
-    const usr = await User.findById(req.user.ido);
+    const usr = await User.findById(req.user.id);
 
     const {name, email, password} = req.body;
     if(!usr){

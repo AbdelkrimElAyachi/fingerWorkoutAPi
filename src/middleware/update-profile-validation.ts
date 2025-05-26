@@ -8,12 +8,14 @@ const updateProfileSchema = z.object({
     name: z.string().min(5).max(255),
     email: z.string().min(6).email().max(255),
     password: z.string().min(6).max(255)
-}).strict();
+}).passthrough();
 
 type RequestBody = {
     email: string;
 }
-export const updateProfileValidation = async (req: Request, res: Response, next: NextFunction) => {
+export const updateProfileValidation = async (req: any, res: Response, next: NextFunction) => {
+    // retrive the user
+    const user = await User.findById(req.user.id);
     // validating using zod
     const parsed = updateProfileSchema.safeParse(req.body);
     if (!parsed.success)
@@ -22,7 +24,7 @@ export const updateProfileValidation = async (req: Request, res: Response, next:
         const { email: emailFromBody }: RequestBody = req.body;
         // checking to see if the user is already registered
         const emailExist = await User.findOne({ email: emailFromBody })
-        if (emailExist)
+        if (emailExist && user && emailExist._id.toString() !== user._id.toString())
             res.status(400).json({success:false, message:'Email already exists!!!'})
         else
             next();

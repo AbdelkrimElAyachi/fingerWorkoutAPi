@@ -7,7 +7,7 @@ import upload from "../mutlter";
 const router = Router();
 
 // sample route - just put the verify middleware before any route here for JWT validation.
-router.get('/profile', verify, profileController)
-router.post('/profile/update', verify, updateProfileValidation, upload.single('picture'), updateProfile)
+router.get('/json/profile', verify, profileController)
+router.post('/profile/update', verify, upload.single('picture'), updateProfileValidation, updateProfile)
 
 export default router

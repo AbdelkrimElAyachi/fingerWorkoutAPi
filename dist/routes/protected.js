@@ -10,6 +10,6 @@ const update_profile_validation_1 = require("../middleware/update-profile-valida
 const protected_2 = require("../controllers/protected");
 const mutlter_1 = __importDefault(require("../mutlter"));
 const router = (0, express_1.Router)();
-router.get('/profile', verify_token_1.verify, protected_1.profileController);
-router.post('/profile/update', verify_token_1.verify, update_profile_validation_1.updateProfileValidation, mutlter_1.default.single('picture'), protected_2.updateProfile);
+router.get('/json/profile', verify_token_1.verify, protected_1.profileController);
+router.post('/profile/update', verify_token_1.verify, mutlter_1.default.single('picture'), update_profile_validation_1.updateProfileValidation, protected_2.updateProfile);
 exports.default = router;

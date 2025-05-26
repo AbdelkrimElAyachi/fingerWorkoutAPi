@@ -21,7 +21,7 @@ const profileController = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.profileController = profileController;
 const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usr = yield User_1.default.findById(req.user.ido);
+    const usr = yield User_1.default.findById(req.user.id);
     const { name, email, password } = req.body;
     if (!usr) {
         return res.status(400).json({ success: false, message: "user not found" });

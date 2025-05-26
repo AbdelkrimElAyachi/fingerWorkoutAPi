@@ -19,15 +19,16 @@ const updateProfileSchema = zod_1.z.object({
     name: zod_1.z.string().min(5).max(255),
     email: zod_1.z.string().min(6).email().max(255),
     password: zod_1.z.string().min(6).max(255)
-}).strict();
+}).passthrough();
 const updateProfileValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.findById(req.user.id);
     const parsed = updateProfileSchema.safeParse(req.body);
     if (!parsed.success)
         res.status(400).send(parsed.error);
     else {
         const { email: emailFromBody } = req.body;
         const emailExist = yield User_1.default.findOne({ email: emailFromBody });
-        if (emailExist)
+        if (emailExist && user && emailExist._id.toString() !== user._id.toString())
             res.status(400).json({ success: false, message: 'Email already exists!!!' });
         else
             next();

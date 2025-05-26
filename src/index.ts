@@ -4,14 +4,16 @@ import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
 
 
-const app = express();
 import { connectDB } from './db/connect';
 import { notFound } from './middleware/not-found';
 import { errorHandlerMiddleware } from './middleware/error-handler';
+import { uploadDir } from "./mutlter";
 
 // routes
 import authRoute from './routes/auth';
 import protectedRoutes from './routes/protected';
+
+const app = express();
 
 dotenv.config();
 
@@ -26,11 +28,14 @@ const corsOptions:CorsOptions = {
 // middleware
 // In your main.ts
 app.use(cors(corsOptions));
-app.use(express.json())
+app.use('/api/json',express.json());
 
 // Routes
-app.use('/api/user', authRoute);
+app.use('/api/json/user', authRoute);
 app.use('/api', protectedRoutes); // just for example
+
+// serve uploads files (mostly user profile pictures)
+app.use('/api/uploads', express.static(uploadDir));
 
 app.use(notFound)
 app.use(errorHandlerMiddleware)
