@@ -11,17 +11,20 @@ export const profileController = async (req: any, res: Response) => {
 export const updateProfile = async (req:any, res:Response) => {
     const usr = await User.findById(req.user.id);
 
-    const {name, email, password} = req.body;
+    const {name, email} = req.body;
     if(!usr){
         return res.status(400).json({success:false, message:"user not found"});
     }
 
     usr.name = name;
     usr.email = email;
-    // hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    usr.password = hashedPassword;
+
+    if(req.body.password){
+        // hash the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        usr.password = hashedPassword;
+    }
     if(req.file){
         usr.picture = req.file.filename;
     }

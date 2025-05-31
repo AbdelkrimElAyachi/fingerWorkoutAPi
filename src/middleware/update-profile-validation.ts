@@ -7,7 +7,7 @@ import User from "../models/User";
 const updateProfileSchema = z.object({
     name: z.string().min(5).max(255),
     email: z.string().min(6).email().max(255),
-    password: z.string().min(6).max(255)
+    password: z.string().min(6).max(255).optional()
 }).passthrough();
 
 type RequestBody = {

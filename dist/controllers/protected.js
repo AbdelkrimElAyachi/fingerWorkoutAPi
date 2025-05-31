@@ -22,15 +22,17 @@ const profileController = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.profileController = profileController;
 const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usr = yield User_1.default.findById(req.user.id);
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
     if (!usr) {
         return res.status(400).json({ success: false, message: "user not found" });
     }
     usr.name = name;
     usr.email = email;
-    const salt = yield bcryptjs_1.default.genSalt(10);
-    const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
-    usr.password = hashedPassword;
+    if (req.body.password) {
+        const salt = yield bcryptjs_1.default.genSalt(10);
+        const hashedPassword = yield bcryptjs_1.default.hash(req.body.password, salt);
+        usr.password = hashedPassword;
+    }
     if (req.file) {
         usr.picture = req.file.filename;
     }

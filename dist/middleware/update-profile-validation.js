@@ -18,7 +18,7 @@ const User_1 = __importDefault(require("../models/User"));
 const updateProfileSchema = zod_1.z.object({
     name: zod_1.z.string().min(5).max(255),
     email: zod_1.z.string().min(6).email().max(255),
-    password: zod_1.z.string().min(6).max(255)
+    password: zod_1.z.string().min(6).max(255).optional()
 }).passthrough();
 const updateProfileValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.default.findById(req.user.id);
