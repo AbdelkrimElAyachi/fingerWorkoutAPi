@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import express from 'express';
 import cors, { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
