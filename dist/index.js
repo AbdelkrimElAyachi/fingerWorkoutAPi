@@ -19,10 +19,10 @@ const connect_1 = require("./db/connect");
 const not_found_1 = require("./middleware/not-found");
 const error_handler_1 = require("./middleware/error-handler");
 const mutlter_1 = require("./mutlter");
+dotenv_1.default.config();
 const auth_1 = __importDefault(require("./routes/auth"));
 const protected_1 = __importDefault(require("./routes/protected"));
 const app = (0, express_1.default)();
-dotenv_1.default.config();
 const port = process.env.PORT || 3000;
 const corsOptions = {
     origin: ['http://localhost:5173', 'http://localhost:4000'],

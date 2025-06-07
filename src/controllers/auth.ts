@@ -10,7 +10,6 @@ interface JwtPayload {
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
-console.log(JWT_SECRET)
 
 export const generateToken = (userId: string): string => {
   return jwt.sign(

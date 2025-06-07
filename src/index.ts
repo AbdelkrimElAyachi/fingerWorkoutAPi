@@ -8,13 +8,14 @@ import { notFound } from './middleware/not-found';
 import { errorHandlerMiddleware } from './middleware/error-handler';
 import { uploadDir } from "./mutlter";
 
+dotenv.config();
+
 // routes
 import authRoute from './routes/auth';
 import protectedRoutes from './routes/protected';
 
 const app = express();
 
-dotenv.config();
 
 const port = process.env.PORT || 3000;
 
