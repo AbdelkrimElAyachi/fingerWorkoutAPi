@@ -18,7 +18,6 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
-console.log(JWT_SECRET);
 const generateToken = (userId) => {
     return jsonwebtoken_1.default.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 };
@@ -77,7 +76,8 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                picture: user.picture
             }
         });
     }

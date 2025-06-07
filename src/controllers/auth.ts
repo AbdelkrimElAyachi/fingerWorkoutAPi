@@ -99,7 +99,8 @@ export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Res
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                picture: user.picture
             }
         });
     } catch (err) {

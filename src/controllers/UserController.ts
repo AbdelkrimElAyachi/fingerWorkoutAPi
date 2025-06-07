@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 // sample controller - it will be executed after the JWT validation.
 export const getProfile = async (req: any, res: Response) => {
-    const usr = await User.findById(req.user.id);
+    const usr = await User.findById(req.user.userId);
     if(!usr){
         return res.status(400).json({success:false, message:"user not found"});
     }
@@ -12,7 +12,9 @@ export const getProfile = async (req: any, res: Response) => {
 }
 
 export const updateProfile = async (req:any, res:Response) => {
-    const usr = await User.findById(req.user.id);
+    console.log(req.user.userId);
+    
+    const usr = await User.findById(req.user.userId);
 
     const {name, email} = req.body;
     if(!usr){

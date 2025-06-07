@@ -16,7 +16,7 @@ exports.uploadPicture = exports.updateProfile = exports.getProfile = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usr = yield User_1.default.findById(req.user.id);
+    const usr = yield User_1.default.findById(req.user.userId);
     if (!usr) {
         return res.status(400).json({ success: false, message: "user not found" });
     }
@@ -24,7 +24,8 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getProfile = getProfile;
 const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usr = yield User_1.default.findById(req.user.id);
+    console.log(req.user.userId);
+    const usr = yield User_1.default.findById(req.user.userId);
     const { name, email } = req.body;
     if (!usr) {
         return res.status(400).json({ success: false, message: "user not found" });
