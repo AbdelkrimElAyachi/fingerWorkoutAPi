@@ -2,17 +2,18 @@ import { Schema, model, Document, Types } from "mongoose";
 
 interface ITestResult extends Document{
     _id: Types.ObjectId,
-    userId:string,
+    userId: Types.ObjectId,
     numberWrongCharacters: number,
     numberCorrectCharacters: number,
     numberWrongWords: number,
     numberCorrectWords: number,
+    duration: number, // in seconds
     datetime: Date
 }
 
 const TestResultSchema:Schema = new Schema({
     userId: {
-        type: String,
+        type: Types.ObjectId,
         required: true,
     },
     numberWrongCharacters:{
@@ -28,6 +29,10 @@ const TestResultSchema:Schema = new Schema({
         required: true,
     },
     numberCorrectWords:{
+        type: Number,
+        required: true,
+    },
+    duration:{
         type: Number,
         required: true,
     },

@@ -1,20 +1,24 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 
 import { z } from "zod";
+import TestResult from "../models/TestResult";
 import User from "../models/User";
 
 // zod Validations
-const updateProfileSchema = z.object({
-    name: z.string().min(5).max(255),
-    email: z.string().min(6).email().max(255),
-    password: z.string().min(6).max(255).optional()
-}).passthrough();
+const TestResultSchema = z.object({
+    numberWrongCharacters: z.number().min(0),
+    numberCorrectCharacters: z.number().min(0),
+    numberWrongWords: z.number().min(0),
+    numberCorrectWords: z.number().min(0),
+    duration: z.number().min(0).max(10), // in minutes
+    datetime: z.string().length(24)
+}).strict();
 
-export const updateProfileValidation = async (req: any, res: Response, next: NextFunction) => {
+export const testResultValidation = async (req: any, res: Response, next: NextFunction) => {
     // retrive the user
     const user = await User.findById(req.user.id);
     // validating using zod
-    const parsed = updateProfileSchema.safeParse(req.body);
+    const parsed = TestResultSchema.safeParse(req.body);
     if (!parsed.success)
         res.status(400).send(parsed.error)
     else {

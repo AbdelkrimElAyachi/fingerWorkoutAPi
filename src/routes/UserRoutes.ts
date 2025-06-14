@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verify } from "../middleware/verify-token";
-import { getProfile, updateProfile } from "../controllers/UserController";
 import { updateProfileValidation } from "../middleware/update-profile-validation";
+import { getProfile, updateProfile } from "../controllers/UserController";
 import upload from "../mutlter";
 const router = Router();
 

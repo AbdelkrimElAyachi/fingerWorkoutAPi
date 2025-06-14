@@ -16,21 +16,23 @@ exports.createTestResult = void 0;
 const TestResult_1 = __importDefault(require("../models/TestResult"));
 const User_1 = __importDefault(require("../models/User"));
 const createTestResult = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usr = yield User_1.default.findById(req.user.id);
+    const usr = yield User_1.default.findById(req.user.userId);
     if (!usr) {
         return res.status(400).json({ success: false, message: "User not found" });
     }
-    const { numberCorrectCharacters, numberCorrectWords, numberWrongCharacters, numberWrongWords } = req.body;
+    const { numberCorrectCharacters, numberCorrectWords, numberWrongCharacters, numberWrongWords, duration, datetime } = req.body;
     const testResult = new TestResult_1.default({
         userId: usr.id,
         numberCorrectCharacters: numberCorrectCharacters,
         numberCorrectWords: numberCorrectWords,
         numberWrongCharacters: numberWrongCharacters,
-        numberWrongWords: numberWrongWords
+        numberWrongWords: numberWrongWords,
+        duration: duration,
+        datetime: datetime
     });
     try {
         testResult.save();
-        return res.status(200).json({ success: true, message: "testResult created succefully", testResult: testResult });
+        return res.status(200).json({ success: true, message: "testResult created succefully", testResult });
     }
     catch (err) {
         res.status(400).json({ success: false, message: err });

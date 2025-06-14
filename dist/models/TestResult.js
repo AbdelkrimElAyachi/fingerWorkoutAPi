@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const TestResultSchema = new mongoose_1.Schema({
     userId: {
-        type: String,
+        type: mongoose_1.Types.ObjectId,
         required: true,
     },
     numberWrongCharacters: {
@@ -19,6 +19,10 @@ const TestResultSchema = new mongoose_1.Schema({
         required: true,
     },
     numberCorrectWords: {
+        type: Number,
+        required: true,
+    },
+    duration: {
         type: Number,
         required: true,
     },
