@@ -12,7 +12,7 @@ const updateProfileSchema = z.object({
 
 export const updateProfileValidation = async (req: any, res: Response, next: NextFunction) => {
     // retrive the user
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.userId);
     // validating using zod
     const parsed = updateProfileSchema.safeParse(req.body);
     if (!parsed.success)

@@ -21,7 +21,7 @@ const updateProfileSchema = zod_1.z.object({
     password: zod_1.z.string().min(6).max(255).optional()
 }).passthrough();
 const updateProfileValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_1.default.findById(req.user.id);
+    const user = yield User_1.default.findById(req.user.userId);
     const parsed = updateProfileSchema.safeParse(req.body);
     if (!parsed.success)
         res.status(400).send(parsed.error);

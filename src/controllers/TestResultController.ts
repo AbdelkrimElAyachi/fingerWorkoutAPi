@@ -27,3 +27,20 @@ export const createTestResult = async (req:any, res:Response) => {
         res.status(400).json({success:false,message:err})
     }
 }
+
+export const getTestResults = async(req:any, res:Response) => {
+    const userId = req.user.userId;
+
+    const usr = await User.findById(userId);
+    if(!usr){
+        return res.status(400).json({success:false, message:"User not found"});
+    }
+    const filter = {userId}
+    try{
+        const testResults = await TestResult.find(filter);
+        return res.status(200).json({success:true, message:"Test Results retrieved succefully",data:testResults});
+    }
+    catch(err){
+        res.status(400).json({success:false, message:err});
+    }
+}
