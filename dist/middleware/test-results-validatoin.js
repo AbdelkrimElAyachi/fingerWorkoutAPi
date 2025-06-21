@@ -12,17 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProfileValidation = void 0;
+exports.testResultValidation = void 0;
 const zod_1 = require("zod");
 const User_1 = __importDefault(require("../models/User"));
-const updateProfileSchema = zod_1.z.object({
-    name: zod_1.z.string().min(5).max(255),
-    email: zod_1.z.string().min(6).email().max(255),
-    password: zod_1.z.string().min(6).max(255).optional()
-}).passthrough();
-const updateProfileValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_1.default.findById(req.user.userId);
-    const parsed = updateProfileSchema.safeParse(req.body);
+const TestResultSchema = zod_1.z.object({
+    numberWrongCharacters: zod_1.z.number().min(0),
+    numberCorrectCharacters: zod_1.z.number().min(0),
+    numberWrongWords: zod_1.z.number().min(0),
+    numberCorrectWords: zod_1.z.number().min(0),
+    duration: zod_1.z.number().min(0).max(10),
+    datetime: zod_1.z.string().length(24)
+}).strict();
+const testResultValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.findById(req.user.id);
+    const parsed = TestResultSchema.safeParse(req.body);
     if (!parsed.success)
         res.status(400).send(parsed.error);
     else {
@@ -34,4 +37,4 @@ const updateProfileValidation = (req, res, next) => __awaiter(void 0, void 0, vo
             next();
     }
 });
-exports.updateProfileValidation = updateProfileValidation;
+exports.testResultValidation = testResultValidation;

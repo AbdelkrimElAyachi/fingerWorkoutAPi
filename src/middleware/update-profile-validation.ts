@@ -10,18 +10,15 @@ const updateProfileSchema = z.object({
     password: z.string().min(6).max(255).optional()
 }).passthrough();
 
-type RequestBody = {
-    email: string;
-}
 export const updateProfileValidation = async (req: any, res: Response, next: NextFunction) => {
     // retrive the user
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.userId);
     // validating using zod
     const parsed = updateProfileSchema.safeParse(req.body);
     if (!parsed.success)
         res.status(400).send(parsed.error)
     else {
-        const { email: emailFromBody }: RequestBody = req.body;
+        const { email: emailFromBody } = req.body;
         // checking to see if the user is already registered
         const emailExist = await User.findOne({ email: emailFromBody })
         if (emailExist && user && emailExist._id.toString() !== user._id.toString())
