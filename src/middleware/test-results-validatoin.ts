@@ -10,7 +10,7 @@ const TestResultSchema = z.object({
     numberCorrectCharacters: z.number().min(0),
     numberWrongWords: z.number().min(0),
     numberCorrectWords: z.number().min(0),
-    duration: z.number().min(0).max(10), // in minutes
+    duration: z.number().min(1).max(10), // in minutes
     datetime: z.string().length(24)
 }).strict();
 

@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTestResults = exports.createTestResult = void 0;
+exports.getTopTestResult = exports.getTestResults = exports.createTestResult = void 0;
 const TestResult_1 = __importDefault(require("../models/TestResult"));
 const User_1 = __importDefault(require("../models/User"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const createTestResult = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usr = yield User_1.default.findById(req.user.userId);
     if (!usr) {
@@ -46,12 +47,48 @@ const getTestResults = (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(400).json({ success: false, message: "User not found" });
     }
     const filter = { userId };
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
     try {
-        const testResults = yield TestResult_1.default.find(filter);
-        return res.status(200).json({ success: true, message: "Test Results retrieved succefully", data: testResults });
+        const testResults = yield TestResult_1.default.find(filter).skip(skip).limit(limit);
+        const total = yield TestResult_1.default.countDocuments(filter);
+        const pages = Math.ceil(total / limit);
+        return res.status(200).json({ success: true, message: "Test Results retrieved succefully", data: testResults, total, pages, page, limit });
     }
     catch (err) {
         res.status(400).json({ success: false, message: err });
     }
 });
 exports.getTestResults = getTestResults;
+const getTopTestResult = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.userId;
+    const usr = yield User_1.default.findById(userId);
+    if (!usr) {
+        return res.status(400).json({ success: false, message: "User not found" });
+    }
+    const aggregationFilter = [
+        {
+            $match: { userId: new mongoose_1.default.Types.ObjectId(userId) }
+        },
+        {
+            $addFields: {
+                wpm: { $divide: ['$numberCorrectWords', '$duration'] }
+            }
+        },
+        {
+            $sort: { wpm: -1 }
+        },
+        {
+            $limit: 1
+        }
+    ];
+    try {
+        const testResults = yield TestResult_1.default.aggregate(aggregationFilter);
+        return res.status(200).json({ success: true, message: "Test Results retrieved succefully", data: testResults });
+    }
+    catch (err) {
+        res.status(400).json({ success: false, message: err });
+    }
+});
+exports.getTopTestResult = getTopTestResult;

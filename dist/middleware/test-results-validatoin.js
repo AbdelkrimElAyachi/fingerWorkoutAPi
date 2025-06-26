@@ -20,7 +20,7 @@ const TestResultSchema = zod_1.z.object({
     numberCorrectCharacters: zod_1.z.number().min(0),
     numberWrongWords: zod_1.z.number().min(0),
     numberCorrectWords: zod_1.z.number().min(0),
-    duration: zod_1.z.number().min(0).max(10),
+    duration: zod_1.z.number().min(1).max(10),
     datetime: zod_1.z.string().length(24)
 }).strict();
 const testResultValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
